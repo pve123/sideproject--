@@ -1,0 +1,46 @@
+spring:
+  profiles:
+    active: dev
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      format_sql: true
+      ddl-auto: create-drop
+  error:
+    nclude-exception: false
+    include-message: always
+    include-stacktrace: on_param
+    whitelabel.enabled: true
+
+# dev
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/project?characterEncoding=utf8
+    username: hosung
+    password: '78qorthd'
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8099
+jwt:
+  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+
+# prod
+---
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8
+    username: root
+    #    password: 'root'
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8099
+jwt:
+  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+
+
+
