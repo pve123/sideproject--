@@ -10,6 +10,7 @@ import com.example.demo.domain.user.repository.UserRepository;
 import com.example.demo.domain.user.repository.WithdrawalRepository;
 import com.example.demo.jwt.TokenProvider;
 import com.example.demo.util.MailSenderRunner;
+import com.example.demo.util.RedisUtil;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,9 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final MailSenderRunner mailSenderRunner;
+
+    private final RedisUtil redisUtil;
+
 
     public ResponseUser sign(RequestUser requestUser) {
 
@@ -199,15 +203,24 @@ public class UserService {
     } //비밀번호 변경
 
 
-    public Object authEmail(RequestUser requestUser) throws Exception {
+    public void authEmail(RequestUser requestUser) throws Exception {
 
 
+        QUser qUser = QUser.user;
 
+        User user = queryFactory
+                .selectFrom(qUser)
+                .where(qUser.userEmail.eq(requestUser.getUserEmail()))
+                .fetchOne();
 
-        Random random = new Random();
-        String authKey = String.valueOf(random.nextInt(888888) + 111111);      // 범위 : 111111 ~ 999999
-        mailSenderRunner.sendAuthEmail("tkddlfdlfemd@kakao.com",authKey);
+        if (user != null) {
+            Random random = new Random();
+            String authKey = String.valueOf(random.nextInt(888888) + 111111);      // 범위 : 111111 ~ 999999
 
-        return null;
+            redisUtil.setDataExpire(requestUser.getUserEmail(), authKey, 60 * 3l); //3분
+            mailSenderRunner.sendAuthEmail(requestUser.getUserEmail(), authKey);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 이메일입니다.");
+        }
     }
 }

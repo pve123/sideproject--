@@ -3,6 +3,7 @@ package com.example.demo.domain.user.entity.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.data.annotation.ReadOnlyProperty;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
