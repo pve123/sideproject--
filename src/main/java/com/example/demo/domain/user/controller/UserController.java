@@ -63,4 +63,23 @@ public class UserController {
     }
 
 
+    @PutMapping(path = "/user/password")
+    @Operation(summary = "비밀번호 변경", description = "비밀번호 변경 API", responses = {
+            @ApiResponse(responseCode = "200", description = "비밀번호 변경 성공"),
+            @ApiResponse(responseCode = "400", description = "비밀번호 변경 실패")})
+    public ResponseEntity updatePassword(@RequestBody RequestUser requestUser) {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updatePassword(requestUser));
+    }
+
+    @PutMapping(path = "/user/auth/email")
+    @Operation(summary = "이메일 인증 코드", description = "이메일 인증코드를 통한 사용자 검증 API", responses = {
+            @ApiResponse(responseCode = "200", description = "사용자 검증 성공"),
+            @ApiResponse(responseCode = "400", description = "비밀번호 찾기 실패")})
+    public ResponseEntity authEmail(@RequestBody RequestUser requestUser) throws Exception {
+
+        return ResponseEntity.status(HttpStatus.OK).body(userService.authEmail(requestUser));
+    }
+
+
+
 }

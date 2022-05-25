@@ -48,11 +48,11 @@ public class RequestUser {
     @ReadOnlyProperty
     @Schema(description = "사용자 Access Token Expired Time")
     private Long accessTokenExpiresIn;
-
+    @ReadOnlyProperty
+    @Schema(description = "새로운 비밀번호")
+    private String newPassword;
 
     public RequestUser toMember(PasswordEncoder passwordEncoder) {
-
-
 
         return RequestUser.builder()
                 .userEmail(userEmail)

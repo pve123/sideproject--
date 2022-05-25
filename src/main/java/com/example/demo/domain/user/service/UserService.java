@@ -9,6 +9,7 @@ import com.example.demo.domain.user.entity.response.ResponseUser;
 import com.example.demo.domain.user.repository.UserRepository;
 import com.example.demo.domain.user.repository.WithdrawalRepository;
 import com.example.demo.jwt.TokenProvider;
+import com.example.demo.util.MailSenderRunner;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +37,7 @@ public class UserService {
     private final WithdrawalRepository withdrawalRepository;
 
     private final PasswordEncoder passwordEncoder;
+    private final MailSenderRunner mailSenderRunner;
 
     public ResponseUser sign(RequestUser requestUser) {
 
@@ -172,5 +175,39 @@ public class UserService {
 
     }//회원 삭제
 
+    @Transactional
+    public ResponseUser updatePassword(RequestUser requestUser) {
 
+        QUser qUser = QUser.user;
+
+        Long result = queryFactory.update(qUser)
+                .set(qUser.userPassword, passwordEncoder.encode(requestUser.getNewPassword()))
+                .set(qUser.updateDateTime, LocalDateTime.now())
+                .where(qUser.userId.eq(requestUser.getUserId()).and(qUser.userPassword.eq(requestUser.getUserPassword())))
+                .execute();
+        if (result == 1) {
+
+            User user = queryFactory
+                    .selectFrom(qUser)
+                    .where(qUser.userId.eq(requestUser.getUserId()))
+                    .fetchOne();
+            ResponseUser responseUser = new ResponseUser(user);
+            return responseUser;
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호 변경에 실패했습니다.");
+        }
+    } //비밀번호 변경
+
+
+    public Object authEmail(RequestUser requestUser) throws Exception {
+
+
+
+
+        Random random = new Random();
+        String authKey = String.valueOf(random.nextInt(888888) + 111111);      // 범위 : 111111 ~ 999999
+        mailSenderRunner.sendAuthEmail("tkddlfdlfemd@kakao.com",authKey);
+
+        return null;
+    }
 }
