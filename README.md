@@ -1,4 +1,4 @@
-# Springboot side project
+# Springboot side project ( JWT + Redis + Gradle + Swagger + SMTP)
 
 
 ### summary : 회원 + 게시판 + 댓글
@@ -7,10 +7,11 @@
 ## Features
 
 - [x] Sign up
-
-- [x] JWT
+- [x] Login(JWT)
+- [x] Edit Member Info
 - [x] Withdrawal
-- [x] Find password / Password change
+- [x] Find password(Redis, SMTP)
+- [x] Password change
 
 
 
