@@ -1,4 +1,4 @@
-package com.example.demo.user.entity;
+package com.example.demo.exception.entity;
 
 import lombok.Data;
 import org.springframework.web.server.ResponseStatusException;

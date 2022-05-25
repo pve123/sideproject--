@@ -1,7 +1,6 @@
-package com.example.demo.user.entity.response;
+package com.example.demo.domain.user.entity.response;
 
-import com.example.demo.user.entity.User;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.example.demo.domain.user.entity.User;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.annotation.ReadOnlyProperty;

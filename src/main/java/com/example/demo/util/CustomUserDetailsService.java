@@ -2,12 +2,12 @@ package com.example.demo.util;
 
 
 
-import com.example.demo.user.repository.UserRepository;
+import com.example.demo.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 //import org.springframework.security.core.userdetails.User;
-import com.example.demo.user.entity.User;
+import com.example.demo.domain.user.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

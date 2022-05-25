@@ -1,7 +1,5 @@
-package com.example.demo.user.entity.request;
+package com.example.demo.domain.user.entity.request;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.google.common.collect.Maps;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.data.annotation.ReadOnlyProperty;
@@ -14,17 +12,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Schema(description = "사용자")
+@Schema(description = "회원")
 public class RequestUser {
 
 
-    @Schema(description = "사용자 ID",example = "1")
+    @Schema(description = "사용자 ID", example = "1", required = true)
     private Long userId;
-    @Schema(description = "사용자 이메일", maxLength = 40, example = "example@example.com")
+    @Schema(description = "사용자 이메일", maxLength = 40, example = "example@example.com", required = true)
     private String userEmail;
-    @Schema(description = "사용자 비밀번호", maxLength = 100)
+    @Schema(description = "사용자 비밀번호", maxLength = 100, required = true)
     private String userPassword;
-    @Schema(description = "사용자 닉네임", maxLength = 10)
+    @Schema(description = "사용자 닉네임", maxLength = 10, required = true)
     private String userNickname;
     @Schema(description = "사용자 주소")
     private String userAddress;
@@ -32,11 +30,11 @@ public class RequestUser {
     private Integer userBirth;
     @Schema(description = "사용자 전화번호", example = "010-1234-5678")
     private String userPhoneNumber;
-    @Schema(description = "생성날짜", pattern = "yyyy:MM:dd HH:mm:ss")
+    @Schema(description = "생성날짜", pattern = "yyyy:MM:dd HH:mm:ss", required = true)
     private LocalDateTime regDateTime;
     @Schema(description = "업데이트 날짜", pattern = "yyyy:MM:dd HH:mm:ss")
     private LocalDateTime updateDateTime;
-    @Schema(description = "사용자 권한", example = "ROLE_USER")
+    @Schema(description = "사용자 권한", example = "ROLE_USER", required = true)
     private String userAuthority;
     @Schema(description = "사용자 Refresh Token")
     private String refreshToken;
@@ -53,10 +51,15 @@ public class RequestUser {
 
 
     public RequestUser toMember(PasswordEncoder passwordEncoder) {
-        Maps.newHashMap();
+
+
+
         return RequestUser.builder()
                 .userEmail(userEmail)
                 .userNickname(userNickname)
+                .userAddress(userAddress)
+                .userPhoneNumber(userPhoneNumber)
+                .userBirth(userBirth)
                 .userPassword(passwordEncoder.encode(userPassword))
                 .userAuthority("ROLE_USER")
                 .build();

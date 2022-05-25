@@ -1,8 +1,8 @@
-package com.example.demo.user.entity;
+package com.example.demo.domain.user.entity;
 
 
-import com.example.demo.user.entity.request.RequestUser;
-import com.example.demo.user.entity.response.ResponseUser;
+import com.example.demo.domain.user.entity.request.RequestUser;
+import com.example.demo.domain.user.entity.response.ResponseUser;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 

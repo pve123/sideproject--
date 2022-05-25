@@ -1,15 +1,16 @@
-package com.example.demo.user.service;
+package com.example.demo.domain.user.service;
 
+import com.example.demo.domain.user.entity.QUser;
+import com.example.demo.domain.user.entity.QWithdrawal;
+import com.example.demo.domain.user.entity.User;
+import com.example.demo.domain.user.entity.Withdrawal;
+import com.example.demo.domain.user.entity.request.RequestUser;
+import com.example.demo.domain.user.entity.response.ResponseUser;
+import com.example.demo.domain.user.repository.UserRepository;
+import com.example.demo.domain.user.repository.WithdrawalRepository;
 import com.example.demo.jwt.TokenProvider;
-import com.example.demo.user.entity.QUser;
-import com.example.demo.user.entity.User;
-import com.example.demo.user.entity.request.RequestUser;
-import com.example.demo.user.entity.response.ResponseUser;
-import com.example.demo.user.repository.UserRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -31,10 +32,11 @@ public class UserService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final UserRepository userRepository;
     private final JPAQueryFactory queryFactory;
+    private final WithdrawalRepository withdrawalRepository;
 
     private final PasswordEncoder passwordEncoder;
 
-    public ResponseUser addUserInfo(RequestUser requestUser) {
+    public ResponseUser sign(RequestUser requestUser) {
 
         QUser qUser = QUser.user;
 
@@ -121,36 +123,54 @@ public class UserService {
     }// 토큰 재발급
 
 
-    public List<User> findAllUserList(Integer pageNum, Integer pageSize) {
-
-
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+    @Transactional
+    public ResponseUser update(RequestUser requestUser) {
 
         QUser qUser = QUser.user;
-        List<User> userList = queryFactory
+
+        Long result = queryFactory.update(qUser)
+                .set(qUser.userAddress, requestUser.getUserAddress())
+                .set(qUser.userBirth, requestUser.getUserBirth())
+                .set(qUser.userNickname, requestUser.getUserNickname())
+                .set(qUser.updateDateTime, LocalDateTime.now())
+                .where(qUser.userId.eq(requestUser.getUserId()))
+                .execute();
+        if (result == 1) {
+            User user = queryFactory
+                    .selectFrom(qUser)
+                    .where(qUser.userId.eq(requestUser.getUserId()))
+                    .fetchOne();
+            ResponseUser responseUser = new ResponseUser(user);
+            return responseUser;
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 회원을 수정하지 못했습니다.");
+        }
+    }//회원 수정
+
+    @Transactional
+    public Withdrawal delete(Long id) {
+
+        QUser qUser = QUser.user;
+        QWithdrawal qWithdrawal = QWithdrawal.withdrawal;
+
+
+        User user = queryFactory
                 .selectFrom(qUser)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-
-        return userList;
-    }//회원 목록
-
-
-    public User findByUserInfo(Long id) {
-
-
-        QUser qUser = QUser.user;
-
-        User user = queryFactory.selectFrom(qUser)
                 .where(qUser.userId.eq(id))
                 .fetchOne();
 
-        if (user == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 회원번호입니다.");
+        Long result = queryFactory.delete(qUser)
+                .where(qUser.userId.eq(id).and(qUser.userAuthority.notEqualsIgnoreCase("ROLE_ADMIN")))
+                .execute();
+        if (result == 1) {
+            Withdrawal withdrawal = new Withdrawal(user);
+            withdrawalRepository.save(withdrawal); // 저장
+            return withdrawal;
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 회원을 삭제하지 못했습니다.");
+        }
 
-
-        return user;
-    }//회원 조회
+    }//회원 삭제
 
 
 }

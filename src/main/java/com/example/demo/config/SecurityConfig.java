@@ -39,12 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/h2-console/**", "/favicon.ico")
                 .antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**");
-//                .antMatchers("/resources/**")
-//                .antMatchers("/css/**")
-//                .antMatchers("/vendor/**")
-//                .antMatchers("/js/**")
-//                .antMatchers("/favicon*/**")
-//                .antMatchers("/img/**")
     }
 
     @Override
@@ -69,8 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/api/v1/admin/**").access("hasRole('ROLE_ADMIN')")
+                .antMatchers("/api/v1/user/**").access("hasRole('ROLE_USER')")
+                .antMatchers("/api/v1/user").access("hasRole('ROLE_USER')")
                 .antMatchers("/api/v1/**").permitAll()
-//                .antMatchers("/api/v1/captive/**").permitAll()
                 .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용

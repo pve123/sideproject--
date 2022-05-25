@@ -49,7 +49,7 @@ public class SwaggerConfig {
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.demo.user.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.demo.domain"))
 //                .paths(PathSelectors.any())
                 .build();
     }
