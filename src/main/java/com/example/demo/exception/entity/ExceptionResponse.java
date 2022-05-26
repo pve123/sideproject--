@@ -1,5 +1,6 @@
 package com.example.demo.exception.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.server.ResponseStatusException;
 

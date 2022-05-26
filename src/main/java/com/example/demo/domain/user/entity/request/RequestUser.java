@@ -52,6 +52,11 @@ public class RequestUser {
     @ReadOnlyProperty
     @Schema(description = "새로운 비밀번호")
     private String newPassword;
+    @ReadOnlyProperty
+    @Schema(description = "이메일 인증코드 번호")
+    private String emailVerificationCode;
+
+
 
     public RequestUser toMember(PasswordEncoder passwordEncoder) {
 

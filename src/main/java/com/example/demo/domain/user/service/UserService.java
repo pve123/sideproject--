@@ -8,6 +8,7 @@ import com.example.demo.domain.user.entity.request.RequestUser;
 import com.example.demo.domain.user.entity.response.ResponseUser;
 import com.example.demo.domain.user.repository.UserRepository;
 import com.example.demo.domain.user.repository.WithdrawalRepository;
+import com.example.demo.exception.ResponseMessage;
 import com.example.demo.jwt.TokenProvider;
 import com.example.demo.util.MailSenderRunner;
 import com.example.demo.util.RedisUtil;
@@ -203,7 +204,7 @@ public class UserService {
     } //비밀번호 변경
 
 
-    public void authEmail(RequestUser requestUser) throws Exception {
+    public void sendEmail(RequestUser requestUser) {
 
 
         QUser qUser = QUser.user;
@@ -218,9 +219,31 @@ public class UserService {
             String authKey = String.valueOf(random.nextInt(888888) + 111111);      // 범위 : 111111 ~ 999999
 
             redisUtil.setDataExpire(requestUser.getUserEmail(), authKey, 60 * 3l); //3분
-            mailSenderRunner.sendAuthEmail(requestUser.getUserEmail(), authKey);
+            mailSenderRunner.sendAuthEmail(requestUser.getUserEmail(), authKey, "code");
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 이메일입니다.");
         }
-    }
+    } //이메일 인증코드 발송
+
+
+    @Transactional
+    public ResponseMessage authEmail(RequestUser requestUser) {
+
+        String emailVerificationCode = redisUtil.getData(requestUser.getUserEmail());
+
+        if (requestUser.getEmailVerificationCode().equals(emailVerificationCode)) {
+
+            QUser qUser = QUser.user;
+            String tempPassword = mailSenderRunner.getRamdomPassword(10);
+            mailSenderRunner.sendAuthEmail(requestUser.getUserEmail(), tempPassword, "password");
+            queryFactory
+                    .update(qUser)
+                    .set(qUser.userPassword, passwordEncoder.encode(tempPassword))
+                    .execute();
+            return ResponseMessage.builder().Message("인증이 완료되었습니다.").statusCode(200).build();
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "잘못된 인증 코드입니다.");
+        }
+    }// 이메일 인증코드 검증
+
 }

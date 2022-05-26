@@ -71,16 +71,25 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updatePassword(requestUser));
     }
 
-    @PostMapping(path = "/auth/email")
-    @Operation(summary = "이메일 인증 코드 발송", description = "이메일 인증코드를 통한 사용자 검증 (Redis) API", responses = {
-            @ApiResponse(responseCode = "204", description = "사용자 검증 성공"),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 이메일")})
-    public ResponseEntity authEmail(@RequestBody RequestUser requestUser) throws Exception {
+    @PostMapping(path = "/send/email")
+    @Operation(summary = "이메일 인증 코드 발송", description = "이메일 인증코드 발송 API ( Redis )", responses = {
+            @ApiResponse(responseCode = "204", description = "사용자 이메일 인증코드 발송 성공"),
+            @ApiResponse(responseCode = "404", description = "가입되어 있지 않은 이메일")})
+    public ResponseEntity sendEmail(@RequestBody RequestUser requestUser) {
 
-        userService.authEmail(requestUser);
+        userService.sendEmail(requestUser);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PostMapping(path = "/auth/email")
+    @Operation(summary = "이메일 인증 코드 검증", description = "이메일 인증코드 검증 후 임시 비밀번호 발급 API ( Redis )", responses = {
+            @ApiResponse(responseCode = "200", description = "사용자 이메일 인증코드 검증 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 인증 코드")})
+    public ResponseEntity authEmail(@RequestBody RequestUser requestUser) {
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(userService.authEmail(requestUser));
+    }
 
 
 }
