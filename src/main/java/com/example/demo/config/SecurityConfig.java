@@ -65,6 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/api/v1/user/**").access("hasRole('ROLE_USER')")
                 .antMatchers("/api/v1/user").access("hasRole('ROLE_USER')")
+                .antMatchers("/api/v1/board/**").access("hasRole('ROLE_USER')")
+                .antMatchers("/api/v1/board").access("hasRole('ROLE_USER')")
                 .antMatchers("/api/v1/**").permitAll()
                 .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
 

@@ -1,13 +1,17 @@
 package com.example.demo.domain.user.entity;
 
 
+import com.example.demo.domain.board.entity.Board;
+import com.example.demo.domain.board.entity.Image;
 import com.example.demo.domain.user.entity.request.RequestUser;
 import com.example.demo.domain.user.entity.response.ResponseUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity(name = "user")
@@ -40,6 +44,11 @@ public class User {
     private LocalDateTime regDateTime;
     @Column(columnDefinition = "DATETIME comment '회원정보 수정 날짜'", nullable = true)
     private LocalDateTime updateDateTime;
+
+
+    @OneToMany(mappedBy = "user")
+    private List<Board> boards;
+
 
     public User(RequestUser requestUser) {
         BeanUtils.copyProperties(requestUser, this);

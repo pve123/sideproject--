@@ -35,4 +35,7 @@ public class ResponseUser {
         BeanUtils.copyProperties(user, this);
     }
 
+    public ResponseUser(){
+
+    }
 }

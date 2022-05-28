@@ -32,6 +32,12 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
+  servlet:
+    multipart:
+      enabled: true
+      location: C:\images
+      max-request-size: 100MB
+      max-file-size: 10MB
 server:
   port: 8099
 jwt:
