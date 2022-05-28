@@ -6,12 +6,12 @@
 
 ## Features
 
-- [x] Sign up
-- [x] Login(JWT)
-- [x] Edit Member Info
-- [x] Withdrawal
-- [x] Find password(Redis, SMTP)
-- [x] Password change
+- [x] 회원가입 
+- [x] 로그인(JWT)
+- [x] 나의 정보 수정
+- [x] 회원탈퇴
+- [x] 비밀번호 변경
+- [x] 임시 비밀번호 발급(SMTP, Redis)
 
 
 
