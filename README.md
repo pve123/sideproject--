@@ -1,4 +1,4 @@
-# Springboot side project ( JWT + Redis + Gradle + Swagger + SMTP + DDD + Entity Migration + JPA + QueryDSL + MSQL)
+# Springboot side project ( JWT + Redis + Gradle + Swagger + SMTP + DDD + Entity Migration + JPA + QueryDSL + MySQL)
 
 
 ### summary : 회원 + 게시판 + 댓글
