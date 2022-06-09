@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: prod
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
@@ -48,9 +48,9 @@ jwt:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://localhost:3306/project?characterEncoding=utf8
+    url: jdbc:mysql://192.168.19.9:13306/project?characterEncoding=utf8
     username: root
-    password: root
+    password: '78qorthd!'
     driver-class-name: com.mysql.cj.jdbc.Driver
   error:
     nclude-exception: false
@@ -65,6 +65,12 @@ spring:
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
+  servlet:
+    multipart:
+      enabled: true
+      location: C:\images
+      max-request-size: 100MB
+      max-file-size: 10MB
 server:
   port: 8099
 jwt:
