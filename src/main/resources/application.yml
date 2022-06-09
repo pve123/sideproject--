@@ -7,17 +7,16 @@ spring:
     show-sql: true
     hibernate:
       format_sql: true
-      ddl-auto: validate
-
+      ddl-auto: create
 
 # dev
 ---
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://localhost:3306/project?characterEncoding=utf8
-    username: hosung
-    password: '78qorthd'
+    url: jdbc:mysql://192.168.19.9:3306/project?characterEncoding=utf8
+    username: root
+    password: '78qorthd!'
     driver-class-name: com.mysql.cj.jdbc.Driver
   error:
     nclude-exception: false
@@ -41,7 +40,7 @@ spring:
 server:
   port: 8099
 jwt:
-  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+  secret: eyJhbGciOiJIUzI1NiJ9eyJzdWIiOiJTcHJpbmdCb290IGhzbGVlIFNpZGUgUHJvamVjdCIsImF1ZCI6ImFsbCIsIklzcyI6ImhzbGVlIiwiZXhwIjoiMjAzMC0xMi0zMVQyMzo1OTo1OSBLU1QifQRbcNEjHnJtYcV0dskYb6DbO7DgVMHFLznK8hXXwV0I
 
 
 # prod
@@ -69,7 +68,7 @@ spring:
 server:
   port: 8099
 jwt:
-  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+  secret: eyJhbGciOiJIUzI1NiJ9eyJzdWIiOiJTcHJpbmdCb290IGhzbGVlIFNpZGUgUHJvamVjdCIsImF1ZCI6ImFsbCIsIklzcyI6ImhzbGVlIiwiZXhwIjoiMjAzMC0xMi0zMVQyMzo1OTo1OSBLU1QifQRbcNEjHnJtYcV0dskYb6DbO7DgVMHFLznK8hXXwV0I
 
 
 
