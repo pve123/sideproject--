@@ -29,6 +29,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -198,6 +199,8 @@ public class BoardService {
                 .where(qBoard.boardId.eq(boardId))
                 .fetchOne();
 
+        if (board == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 게시물을 이미지 업로드 실패");
+
         for (Image image : imageList) {
             image = new Image(image, board);
             resultImages.add(image);
@@ -216,6 +219,7 @@ public class BoardService {
                 .on(qImage.board.boardId.eq(boardId))
                 .fetch();
 
+
         return responseImages;
     } //게시물 이미지 업로드
 
@@ -223,8 +227,10 @@ public class BoardService {
     @Transactional
     public ResponseMessage removeImages(RequestImage images) {
 
-        imageRepository.deleteByBoard_BoardId(images.getBoardId());
 
+        List<Long> imageIds = images.getImageList().stream().map(Image::getId).collect(Collectors.toList());
+        Integer result = imageRepository.deleteByBoard_BoardIdAndIdIn(images.getBoardId(), imageIds);
+        if (result == 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 게시물 이미지 삭제 실패");
         for (Image image : images.getImageList()) {
             File file = new File(image.getSavePath());
             file.delete();

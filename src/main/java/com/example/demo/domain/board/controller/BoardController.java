@@ -43,7 +43,8 @@ public class BoardController {
 
     @DeleteMapping(path = "/board/images")
     @Operation(summary = "이미지 삭제", description = "게시물 이미지 삭제 API", responses = {
-            @ApiResponse(responseCode = "200", description = "이미지 추가 성공")})
+            @ApiResponse(responseCode = "200", description = "이미지 삭제 성공"),
+            @ApiResponse(responseCode = "400", description = "이미지 삭제 실패")})
     public ResponseEntity removeImages(@RequestBody RequestImage requestImages) {
 
         return ResponseEntity.status(HttpStatus.OK).body(boardService.removeImages(requestImages));
