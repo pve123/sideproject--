@@ -1,14 +1,12 @@
 package com.example.demo.domain.board.service;
 
-import com.example.demo.domain.board.entity.Board;
-import com.example.demo.domain.board.entity.Image;
-import com.example.demo.domain.board.entity.QBoard;
-import com.example.demo.domain.board.entity.QImage;
+import com.example.demo.domain.board.entity.*;
 import com.example.demo.domain.board.entity.request.RequestBoard;
 import com.example.demo.domain.board.entity.request.RequestImage;
 import com.example.demo.domain.board.entity.response.ResponseBoard;
 import com.example.demo.domain.board.entity.response.ResponseImage;
 import com.example.demo.domain.board.repository.BoardRepository;
+import com.example.demo.domain.board.repository.BoardViewsRepository;
 import com.example.demo.domain.board.repository.ImageRepository;
 import com.example.demo.domain.user.entity.QUser;
 import com.example.demo.domain.user.entity.User;
@@ -39,6 +37,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final ImageRepository imageRepository;
     private final FileUpload fileUpload;
+    private final BoardViewsRepository boardViewsRepository;
 
     public ResponseBoard addBoard(RequestBoard requestBoard) {
 
@@ -52,6 +51,7 @@ public class BoardService {
             requestBoard.setWriterEmail(user.getUserEmail());
             requestBoard.setWriterNickName(user.getUserNickname());
             requestBoard.setRegDateTime(LocalDateTime.now());
+            requestBoard.setViews(0);
             Board board = new Board(requestBoard, user);
             boardRepository.save(board);
             ResponseBoard responseBoard = new ResponseBoard(board, user);
@@ -62,7 +62,7 @@ public class BoardService {
     }// 게시물 등록
 
 
-    public Object pagingTotalBoard(Integer pageNum, Integer pageSize) {
+    public List<ResponseBoard> pagingTotalBoard(Integer pageNum, Integer pageSize) {
         QBoard qBoard = QBoard.board;
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
 
@@ -88,7 +88,8 @@ public class BoardService {
     } //전체 게시물 페이징
 
 
-    public ResponseBoard findBoard(Long boardId) {
+    @Transactional
+    public ResponseBoard findBoard(Long boardId, Long userId) {
 
         QBoard qBoard = QBoard.board;
 
@@ -109,6 +110,21 @@ public class BoardService {
                 .fetchOne();
 
         if (responseBoard != null) {
+
+            String viewKey = userId + "_" + boardId;
+            BoardViews boardViews = boardViewsRepository.findByViewKey(viewKey);
+            if (boardViews == null) {
+                boardViews = BoardViews.builder().viewKey(viewKey).viewDateTime(LocalDateTime.now()).build();
+                boardViewsRepository.save(boardViews);
+                queryFactory
+                        .update(qBoard)
+                        .set(qBoard.views, qBoard.views.add(1))
+                        .where(qBoard.boardId.eq(boardId))
+                        .execute();
+                responseBoard.setViews(responseBoard.getViews() + 1);
+            }
+
+
             return responseBoard;
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글 조회에 실패하셨습니다.");
@@ -187,7 +203,7 @@ public class BoardService {
     } //게시물 삭제
 
 
-    public Object uploadImages(MultipartFile[] uploadFiles, Long boardId) {
+    public List<ResponseImage> uploadImages(MultipartFile[] uploadFiles, Long boardId) {
 
 
         List<Image> resultImages = Lists.newArrayList();
@@ -203,6 +219,7 @@ public class BoardService {
 
         for (Image image : imageList) {
             image = new Image(image, board);
+            image.setUploadDateTime(LocalDateTime.now());
             resultImages.add(image);
         }
         imageRepository.saveAll(resultImages);
@@ -240,5 +257,6 @@ public class BoardService {
         return responseMessage;
 
     } //게시물 이미지 삭제
+
 }
 

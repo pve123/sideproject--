@@ -46,6 +46,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-mail:2.6.3'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework:spring-aop'
 
 
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'

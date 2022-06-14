@@ -1,7 +1,6 @@
 package com.example.demo.domain.board.controller;
 
 
-import com.example.demo.domain.board.entity.Image;
 import com.example.demo.domain.board.entity.request.RequestBoard;
 import com.example.demo.domain.board.entity.request.RequestImage;
 import com.example.demo.domain.board.service.BoardService;
@@ -12,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -61,11 +58,14 @@ public class BoardController {
     }
 
     @GetMapping(path = "/board/{id}")
-    @Operation(summary = "해당 게시물 조회", description = "게시물 조회 API", responses = {
+    @Operation(summary = "해당 게시물 조회 및 조회 수 업데이트", description = "게시물 조회 및 조회수 업데이트 API", responses = {
             @ApiResponse(responseCode = "200", description = "게시물 조회 성공"),
             @ApiResponse(responseCode = "404", description = "게시글 조회 실패")})
-    public ResponseEntity findBoard(@PathVariable("id") Long boardId) {
-        return ResponseEntity.status(HttpStatus.OK).body(boardService.findBoard(boardId));
+    public ResponseEntity findBoard(
+            @RequestParam("userId") Long userId,
+            @RequestParam("boardId") Long boardId) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(boardService.findBoard(boardId, userId));
     }
 
     @GetMapping(path = "/board/user/{id}")

@@ -27,6 +27,8 @@ public class Image {
     private String savePath;
     @Column(columnDefinition = "VARCHAR(100) comment '서버에 올라가는 이미지 이름'", nullable = false)
     private String uuidFileName;
+    @Column(columnDefinition = "DATETIME comment '이미지 업로드 날짜'", nullable = false)
+    private LocalDateTime uploadDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", columnDefinition = "BIGINT", nullable = false, referencedColumnName = "boardId"

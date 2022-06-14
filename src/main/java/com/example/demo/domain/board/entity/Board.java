@@ -2,6 +2,7 @@ package com.example.demo.domain.board.entity;
 
 
 import com.example.demo.domain.board.entity.request.RequestBoard;
+import com.example.demo.domain.reply.entity.Reply;
 import com.example.demo.domain.user.entity.User;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
@@ -37,17 +38,18 @@ public class Board {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", columnDefinition = "BIGINT", nullable = false, referencedColumnName = "userId"
-            , foreignKey = @ForeignKey(name = "FK_BOARD_USER_ID"))
+            , foreignKey = @ForeignKey(name = "FK_BOARD_USER_ID",
+            foreignKeyDefinition = "FOREIGN KEY(user_id) REFERENCES USER(user_id) ON DELETE CASCADE"))
     private User user;
-
 
     @OneToMany(mappedBy = "board")
     private List<Image> images;
+    @OneToMany(mappedBy = "board")
+    private List<Reply> replies;
 
     public Board(RequestBoard requestBoard, User user) {
         BeanUtils.copyProperties(requestBoard, this);
         this.user = user;
     }
-
 
 }

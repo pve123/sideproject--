@@ -170,6 +170,7 @@ public class UserService {
         Long result = queryFactory.delete(qUser)
                 .where(qUser.userId.eq(id).and(qUser.userAuthority.notEqualsIgnoreCase("ROLE_ADMIN")))
                 .execute();
+        
         if (result == 1) {
             Withdrawal withdrawal = new Withdrawal(user);
             withdrawalRepository.save(withdrawal); // 저장
