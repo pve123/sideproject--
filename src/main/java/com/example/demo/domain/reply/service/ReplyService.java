@@ -91,6 +91,31 @@ public class ReplyService {
 
 
         return responseReplies;
-    } //전체 게시물 페이징
+    } //게시물 댓글 페이징
 
+
+    public Object pagingReplyRecomment(Integer pageNum, Integer pageSize, Integer replyGroup) {
+        QReply qReply = QReply.reply;
+        QBoard qBoard = QBoard.board;
+        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+        List<ResponseReply> responseReplies = queryFactory.select(Projections.fields(
+                ResponseReply.class,
+                qReply.board.boardId,
+                qReply.comment,
+                qReply.replyId,
+                qReply.replyGroup,
+                qReply.replyType,
+                qReply.writerNickName,
+                qReply.regDateTime,
+                qReply.updateDateTime
+        ))
+                .from(qBoard)
+                .innerJoin(qBoard.replies, qReply)
+                .where(qReply.replyType.eq(1).and(qReply.replyGroup.eq(replyGroup)))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return responseReplies;
+    } //대댓글 페이징
 }

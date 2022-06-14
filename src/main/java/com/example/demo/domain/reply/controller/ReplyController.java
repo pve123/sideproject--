@@ -29,13 +29,22 @@ public class ReplyController {
 
     @GetMapping(path = "/reply")
     @Operation(summary = "댓글 목록 페이징", description = "댓글 목록 페이징 API", responses = {
-            @ApiResponse(responseCode = "200", description = "댓글 목록 조회 성공"),
-            @ApiResponse(responseCode = "400", description = "댓글 목록 조회 실패")})
+            @ApiResponse(responseCode = "200", description = "댓글 목록 조회 성공")})
     public ResponseEntity pagingBoardReply(@RequestParam(defaultValue = "1", value = "page") Integer pageNum,
                                            @RequestParam(defaultValue = "10", value = "size") Integer pageSize,
                                            @RequestParam("boardId") Long boardId) {
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(replyService.pagingBoardReply(pageNum, pageSize, boardId));
+        return ResponseEntity.status(HttpStatus.OK).body(replyService.pagingBoardReply(pageNum, pageSize, boardId));
+    }
+    @GetMapping(path = "/reply/recomment")
+    @Operation(summary = "대댓글 목록 페이징", description = "대댓글 목록 페이징 API", responses = {
+            @ApiResponse(responseCode = "200", description = "대댓글 목록 조회 성공")})
+    public ResponseEntity pagingBoardReply(
+            @RequestParam(defaultValue = "1", value = "page") Integer pageNum,
+            @RequestParam(defaultValue = "10", value = "size") Integer pageSize,
+            @RequestParam("replyGroup") Integer replyGroup) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(replyService.pagingReplyRecomment(pageNum, pageSize, replyGroup));
     }
 
 }
