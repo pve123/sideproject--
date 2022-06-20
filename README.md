@@ -30,7 +30,7 @@
 ## 사용한 툴 
 
 #### - Development tool : IntelliJ 
-#### - DB : Mysql
+#### - DB tool : Mysql(DataGrip)
 
 
 
