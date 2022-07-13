@@ -8,15 +8,17 @@ spring:
     hibernate:
       format_sql: true
       ddl-auto: validate
-
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
 # dev
 ---
 spring:
   profiles: dev
   datasource:
-    url: jdbc:mysql://localhost:3306/project?characterEncoding=utf8
-    username: root
-    password: '78qorthd!'
+    url: ENC(+rBt/bxt8y+cXumnX6EAw1lXuKmkjaJOBUMOx/5+b6OTGcrqL5RzMBb4vigohPa+7pYhZryfeMw2Wg6D2mtL9mkE/5Lo8xvh)
+    username: ENC(5JbUcipJ4sehIVk9NX8czA==)
+    password: ENC(wC+uEi3oJHt4tI/VihU2DJ+BPvLyCfAv)
     driver-class-name: com.mysql.cj.jdbc.Driver
   error:
     nclude-exception: false
@@ -26,8 +28,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: tkddlfdlfemd@gmail.com
-    password: pputllfxgpzbmunw
+    username: ENC(AZC1Cc3XhzXNbBg/8W5FZ1wkMD4Jd3t8UC6BvmJyYjg=)
+    password: ENC(UvQKr+FyhPN3NnASdF8YTaLAiKAXsY6GQ4Vbj2/f8WY=)
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
@@ -48,9 +50,9 @@ jwt:
 spring:
   profiles: prod
   datasource:
-    url: jdbc:mysql://192.168.19.9:13306/project?characterEncoding=utf8
-    username: root
-    password: '78qorthd!'
+    url: ENC(H9DuKkTLj8WTegsFHI2vZpSiPxflbtfRYqJOkVoB2x9aAzyckTDhTbIIdkKJY5kcnAMhUcGA3KzhVbaGU9NYTxCTEYqBljWQ)
+    username: ENC(5JbUcipJ4sehIVk9NX8czA==)
+    password: ENC(wC+uEi3oJHt4tI/VihU2DJ+BPvLyCfAv)
     driver-class-name: com.mysql.cj.jdbc.Driver
   error:
     nclude-exception: false
@@ -60,8 +62,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: tkddlfdlfemd@gmail.com
-    password: pputllfxgpzbmunw
+    username: ENC(AZC1Cc3XhzXNbBg/8W5FZ1wkMD4Jd3t8UC6BvmJyYjg=)
+    password: ENC(UvQKr+FyhPN3NnASdF8YTaLAiKAXsY6GQ4Vbj2/f8WY=)
     properties:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
