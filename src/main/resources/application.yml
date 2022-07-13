@@ -21,9 +21,8 @@ spring:
     password: ENC(wC+uEi3oJHt4tI/VihU2DJ+BPvLyCfAv)
     driver-class-name: com.mysql.cj.jdbc.Driver
   error:
-    nclude-exception: false
-    include-message: always
-    include-stacktrace: on_param
+    include-exception: true
+    include-stacktrace: always
     whitelabel.enabled: true
   mail:
     host: smtp.gmail.com
@@ -55,9 +54,8 @@ spring:
     password: ENC(wC+uEi3oJHt4tI/VihU2DJ+BPvLyCfAv)
     driver-class-name: com.mysql.cj.jdbc.Driver
   error:
-    nclude-exception: false
-    include-message: always
-    include-stacktrace: on_param
+    include-exception: true
+    include-stacktrace: always
     whitelabel.enabled: true
   mail:
     host: smtp.gmail.com
