@@ -1,7 +1,7 @@
 # Springboot side project ( JWT + Redis + Gradle + Swagger + SMTP + DDD + Entity Migration + JPA + QueryDSL + MySQL + Docker + Jasypt + WebSocket)
 
 
-### summary : 회원 + 게시판 + 댓글 + 이메일 인증
+### summary : 회원 + 게시판 + 댓글 + 이메일 인증 + 랜덤채팅
 
 
 ## Features
