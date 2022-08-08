@@ -15,6 +15,7 @@ public class ExceptionResolve {
     @ExceptionHandler({ResponseStatusException.class})
     public ExceptionResponse responseStatusException(ResponseStatusException responseStatusException, HttpServletResponse httpServletResponse) {
 
+
         log.error("ERROR 발생 내용 : " + responseStatusException.getReason());
         ExceptionResponse exceptionResponse = new ExceptionResponse(responseStatusException);
         httpServletResponse.setStatus(responseStatusException.getRawStatusCode());
