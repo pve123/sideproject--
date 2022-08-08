@@ -24,8 +24,7 @@
 - [x] 회원 목록 (Paging)
 - [x] 댓글 (Paging)
 - [x] 대댓글 ( Paging)
-
-- [x] 랜덤채팅 (Paging)
+- [x] 랜덤채팅 (WebSocket)
 
 
 
