@@ -35,4 +35,9 @@
 #### - DB tool : Mysql(DataGrip, WorkBench)
 
 
+## 간단한 랜덤 챗 구현
+
+https://user-images.githubusercontent.com/59010442/183376056-54172813-c93a-4d66-88d0-1fadbe327187.mp4
+
+
 
