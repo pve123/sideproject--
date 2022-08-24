@@ -1,5 +1,4 @@
-# Springboot side project ( JWT + Redis + Gradle + Swagger + SMTP + DDD + Entity Migration + JPA + QueryDSL + MySQL + Docker + Jasypt + WebSocket + Oauth2.0
-+thymleaf)
+# Springboot side project ( JWT + Redis + Gradle + Swagger + SMTP + DDD + Entity Migration + JPA + QueryDSL + MySQL + Docker + Jasypt + WebSocket + Oauth2.0 + thymleaf)
 
 
 ### summary : 회원 + 게시판 + 댓글 + 이메일 인증 + 랜덤채팅
@@ -26,6 +25,7 @@
 - [x] 댓글 (Paging)
 - [x] 대댓글 ( Paging)
 - [x] 랜덤채팅 (WebSocket)
+- [x] SNS로그인 (OAuth2.0 + tymeleaf)
 
 
 
@@ -38,6 +38,13 @@
 ## 간단한 랜덤 챗 구현
 
 https://user-images.githubusercontent.com/59010442/183376056-54172813-c93a-4d66-88d0-1fadbe327187.mp4
+
+
+
+##SNS로그인 구현(카카오,네이버,구글)
+
+
+https://user-images.githubusercontent.com/59010442/186295971-d303baf5-8746-4bac-aaab-28e0e32c51a2.mp4
 
 
 
