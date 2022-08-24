@@ -1,4 +1,4 @@
-# Springboot side project ( JWT + Redis + Gradle + Swagger + SMTP + DDD + Entity Migration + JPA + QueryDSL + MySQL + Docker + Jasypt + WebSocket + Oauth2.0 + thymleaf)
+# Springboot side project ( JWT + Redis + Gradle + Swagger + SMTP + DDD + Entity Migration + JPA + QueryDSL + MySQL + Docker + Jasypt + WebSocket + OAuth2.0 + thymleaf)
 
 
 ### summary : 회원 + 게시판 + 댓글 + 이메일 인증 + 랜덤채팅
