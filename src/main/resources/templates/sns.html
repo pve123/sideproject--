@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SNS Test</title>
+</head>
+
+<style>
+
+    img{
+        width: 350px;
+        height: 50px;
+        margin-left: auto;
+    }
+</style>
+<body>
+<h2>SNS LOGIN</h2><br/><br/>
+<a href="javascript:;" class="btn_social" data-social="facebook" id="facebook">페이스북 로그인(미구현)</a><br/>
+<a href="javascript:;" class="btn_social" data-social="google"><img src="images/google.png"></a><br/>
+<a href="javascript:;" class="btn_social" data-social="kakao"><img src="images/kakao.png"></a><br/>
+<a href="javascript:;" class="btn_social" data-social="naver"><img src="images/naver.png"></a><br/>
+
+
+</body>
+<script>
+    let socials = document.getElementsByClassName("btn_social");
+
+    for (let social of socials) {
+        social.addEventListener('click', function () {
+            let socialType = this.getAttribute('data-social');
+            location.href = "/oauth2/authorization/" + socialType;
+            console.log(location.href)
+        })
+    }
+</script>
+</html>

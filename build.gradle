@@ -22,38 +22,45 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'junit:junit:4.12'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.29'
     // Hibernate
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     //querydsl
     implementation 'com.querydsl:querydsl-jpa'
-//    // https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-annotations
-//    implementation group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.1.12'
-
+    //swagger
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
-    //Oauth2.0
+    //oauth2.0
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
 
 
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail
+    //mailsender
     implementation 'org.springframework.boot:spring-boot-starter-mail:2.6.3'
 
+
+    //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework:spring-aop'
 
-    // https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter
+    //jasypt
     implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.3'
 
+    //thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    //OAuth2.0
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 
-
+    //JWT
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
     implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
     implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'

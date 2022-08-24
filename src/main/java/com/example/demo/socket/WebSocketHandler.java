@@ -28,7 +28,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
                 }
             }
         });
-
     }
 
     @Override

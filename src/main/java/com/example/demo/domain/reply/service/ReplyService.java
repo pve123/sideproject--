@@ -8,7 +8,6 @@ import com.example.demo.domain.reply.entity.Reply;
 import com.example.demo.domain.reply.entity.request.RequestReply;
 import com.example.demo.domain.reply.entity.response.ResponseReply;
 import com.example.demo.domain.reply.repository.ReplyRepository;
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +15,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -83,11 +78,11 @@ public class ReplyService {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        for (ResponseReply responseReply : responseReplies){
-            List<Reply> replies = replyRepository.findByReplyGroupAndReplyType(responseReply.getReplyGroup(),1);
+        for (ResponseReply responseReply : responseReplies) {
+            List<Reply> replies = replyRepository.findByReplyGroupAndReplyType(responseReply.getReplyGroup(), 1);
+
             responseReply.setReCommentCnt(replies.size());
         }
-
 
 
         return responseReplies;
